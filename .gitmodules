@@ -1,0 +1,6 @@
+[submodule "twss"]
+	path = twss
+	url = git@github.com:tansaku/twss.git
+[submodule "beatbox"]
+	path = beatbox
+	url = git@github.com:superfell/Beatbox.git
