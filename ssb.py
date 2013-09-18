@@ -29,7 +29,7 @@ input = open("heckle_list.pk")
 heckle_list = pickle.load(input)
 input.close()
 
-cutoff = 0.7
+cutoff = 0.6
 
 def twss(sentence):
     x = processSentence(str(sentence), vocabList)
