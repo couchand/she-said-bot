@@ -43,6 +43,13 @@ class SheSaidBot:
 
     def check(self, qr):
         for rec in qr[sf.records:]:
+            m = rec[3]
+            v = twss(m)
+            if cutoff < v:
+                print '--'
+                print m
+                print 'That\'s what she said! (' + str(v) + ')'
+                self.create(str(rec[1]))
             for r in rec[4][sf.records:]:
                 m = r[3]
                 v = twss(m)
@@ -60,7 +67,7 @@ class SheSaidBot:
             self.check(qr)
 
     def query(self):
-        qr = svc.query("select id, createdby.name, (select id, commentbody from feedcomments) from collaborationgroupfeed WHERE ParentId = '0F9E00000004vXoKAI'")
+        qr = svc.query("select id, body, (select id, commentbody from feedcomments) from collaborationgroupfeed WHERE ParentId = '0F9E00000004vXoKAI'")
         self.dumpQueryResult(qr)
 
     def create(self, itemid):
