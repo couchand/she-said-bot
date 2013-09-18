@@ -25,6 +25,10 @@ vocabList = pickle.load(input)
 input.close()
 model = svm_load_model("twss/data/svm_model.pk")
 
+input = open("heckle_list.pk")
+heckle_list = pickle.load(input)
+input.close()
+
 cutoff = 0.7
 
 def twss(sentence):
@@ -42,6 +46,8 @@ class SheSaidBot:
         print "welcome " + str(loginResult[sf.userInfo][sf.userFullName])
 
     def checkForJoke(self, recordId, message):
+        if str(recordId) in heckle_list:
+            return
         v = twss(message)
         if cutoff < v:
             print '--'
@@ -78,14 +84,18 @@ class SheSaidBot:
 
         if str(sr[sf.success]) == 'true':
             print "id " + str(sr[sf.id])
+            heckle_list.append(itemid)
         else:
             print "error " + str(sr[sf.errors][sf.statusCode]) + ":" + str(sr[sf.errors][sf.message])
 
 if __name__ == "__main__":
-
     if len(sys.argv) != 3:
         print "usage is ssb.py <username> <password>"
     else:
         bot = SheSaidBot()
         bot.login(sys.argv[1], sys.argv[2])
         bot.query()
+
+        output = open("heckle_list.pk","wb")
+        pickle.dump(heckle_list, output)
+        output.close()
