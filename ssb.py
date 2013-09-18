@@ -72,7 +72,9 @@ class SheSaidBot:
             self.checkPost(qr)
 
     def query(self):
-        qr = svc.query("select id, body, (select id, commentbody from feedcomments) from collaborationgroupfeed WHERE ParentId = '0F9E00000004vXoKAI'")
+        today = datetime.datetime.utcnow() + datetime.timedelta(seconds=-10)
+        now = today.strftime('%Y-%m-%dT%H:%M:%SZ')
+        qr = svc.query("select id, body, (select id, commentbody from feedcomments) from collaborationgroupfeed WHERE ParentId = '0F9E00000004vXoKAI' AND LastModifiedDate > "+now)
         self.findJokes(qr)
 
     def heckle(self, itemid):
