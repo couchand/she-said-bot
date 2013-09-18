@@ -51,8 +51,11 @@ class SheSaidBot:
 
     def check(self, qr):
         for rec in qr[sf.records:]:
-            self.checkForJoke(rec[1], rec[3])
-            for r in rec[4][sf.records:]:
+            comments = rec[4][sf.records:]
+            if len(comments) == 0:
+                self.checkForJoke(rec[1], rec[3])
+            else:
+                r = comments[-1]
                 self.checkForJoke(rec[1], r[3])
 
     def dumpQueryResult(self, qr):
