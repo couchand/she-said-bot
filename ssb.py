@@ -20,10 +20,10 @@ sf = beatbox._tPartnerNS
 svc = beatbox.Client()
 beatbox.gzipRequest=False
 
-input = open('../twss/data/vocab.pk')
+input = open('twss/data/vocab.pk')
 vocabList = pickle.load(input)
 input.close()
-model = svm_load_model("../twss/data/svm_model.pk")
+model = svm_load_model("twss/data/svm_model.pk")
 
 cutoff = 0.7
 
