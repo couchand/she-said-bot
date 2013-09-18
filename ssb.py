@@ -105,3 +105,8 @@ if __name__ == "__main__":
             pickle.dump(heckle_list, output)
             output.close()
             sys.exit(0)
+        except:
+            output = open("heckle_list.pk","wb")
+            pickle.dump(heckle_list, output)
+            output.close()
+            raise
