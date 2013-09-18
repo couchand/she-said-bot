@@ -47,9 +47,9 @@ class SheSaidBot:
             print '--'
             print message
             print 'That\'s what she said! (' + str(v) + ')'
-            self.create(str(recordId))
+            self.heckle(str(recordId))
 
-    def check(self, qr):
+    def checkPost(self, qr):
         for rec in qr[sf.records:]:
             comments = rec[4][sf.records:]
             if len(comments) == 0:
@@ -58,18 +58,18 @@ class SheSaidBot:
                 r = comments[-1]
                 self.checkForJoke(rec[1], r[3])
 
-    def dumpQueryResult(self, qr):
-        self.check(qr)
+    def findJokes(self, qr):
+        self.checkPost(qr)
 
         if (str(qr[sf.done]) == 'false'):
             qr = svc.queryMore(str(qr[sf.queryLocator]))
-            self.check(qr)
+            self.checkPost(qr)
 
     def query(self):
         qr = svc.query("select id, body, (select id, commentbody from feedcomments) from collaborationgroupfeed WHERE ParentId = '0F9E00000004vXoKAI'")
-        self.dumpQueryResult(qr)
+        self.findJokes(qr)
 
-    def create(self, itemid):
+    def heckle(self, itemid):
         a = { 'type': 'FeedComment',
             'FeedItemId': itemid,
             'CommentType': 'TextComment',
@@ -78,7 +78,6 @@ class SheSaidBot:
 
         if str(sr[sf.success]) == 'true':
             print "id " + str(sr[sf.id])
-            self.__idToDelete = str(sr[sf.id])
         else:
             print "error " + str(sr[sf.errors][sf.statusCode]) + ":" + str(sr[sf.errors][sf.message])
 
