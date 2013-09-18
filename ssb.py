@@ -25,9 +25,12 @@ vocabList = pickle.load(input)
 input.close()
 model = svm_load_model("twss/data/svm_model.pk")
 
-input = open("heckle_list.pk")
-heckle_list = pickle.load(input)
-input.close()
+try:
+    input = open("heckle_list.pk")
+    heckle_list = pickle.load(input)
+    input.close()
+except:
+    heckle_list = []
 
 cutoff = 0.6
 
