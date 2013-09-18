@@ -41,23 +41,19 @@ class SheSaidBot:
         loginResult = svc.login(username, password)
         print "welcome " + str(loginResult[sf.userInfo][sf.userFullName])
 
+    def checkForJoke(self, recordId, message):
+        v = twss(message)
+        if cutoff < v:
+            print '--'
+            print message
+            print 'That\'s what she said! (' + str(v) + ')'
+            self.create(str(recordId))
+
     def check(self, qr):
         for rec in qr[sf.records:]:
-            m = rec[3]
-            v = twss(m)
-            if cutoff < v:
-                print '--'
-                print m
-                print 'That\'s what she said! (' + str(v) + ')'
-                self.create(str(rec[1]))
+            self.checkForJoke(rec[1], rec[3])
             for r in rec[4][sf.records:]:
-                m = r[3]
-                v = twss(m)
-                if cutoff < v:
-                    print '--'
-                    print m
-                    print 'That\'s what she said! (' + str(v) + ')'
-                    self.create(str(rec[1]))
+                self.checkForJoke(rec[1], r[3])
 
     def dumpQueryResult(self, qr):
         self.check(qr)
