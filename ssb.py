@@ -96,8 +96,12 @@ if __name__ == "__main__":
     else:
         bot = SheSaidBot()
         bot.login(sys.argv[1], sys.argv[2])
-        bot.query()
 
-        output = open("heckle_list.pk","wb")
-        pickle.dump(heckle_list, output)
-        output.close()
+        try:
+            while 1:
+                bot.query()
+        except (KeyboardInterrupt):
+            output = open("heckle_list.pk","wb")
+            pickle.dump(heckle_list, output)
+            output.close()
+            sys.exit(0)
