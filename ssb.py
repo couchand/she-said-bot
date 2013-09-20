@@ -32,7 +32,7 @@ try:
 except:
     heckle_list = []
 
-cutoff = 0.9
+cutoff = 0.85
 
 def twss(sentence):
     x = processSentence(str(sentence), vocabList)
