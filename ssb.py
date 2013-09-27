@@ -32,7 +32,7 @@ try:
 except:
     heckle_list = []
 
-cutoff = 0.8
+cutoff = 0.75
 
 def twss(sentence):
     x = processSentence(str(sentence), vocabList)
@@ -75,7 +75,7 @@ class SheSaidBot:
             self.checkPost(qr)
 
     def query(self):
-        today = datetime.datetime.utcnow() + datetime.timedelta(seconds=-10)
+        today = datetime.datetime.utcnow() + datetime.timedelta(seconds=-60)
         now = today.strftime('%Y-%m-%dT%H:%M:%SZ')
         qr = svc.query("select id, body, (select id, commentbody from feedcomments) from collaborationgroupfeed WHERE LastModifiedDate > "+now)
         self.findJokes(qr)
